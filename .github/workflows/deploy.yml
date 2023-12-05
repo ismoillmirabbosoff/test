@@ -25,18 +25,12 @@ jobs:
       - name: Create Pull Request on Success
         if: success()
         run: |
-          git config user.name "ismoillmirabbosoff"
-          git config user.email "ismoillmirabbosoff@users.noreply.github.com"
-          git checkout dev  # Use an existing branch
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git checkout -b deployment-branch
           git commit -am "Auto-commit on successful build"
-
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
-        with:
-          base: 'main'
-          head: 'dev'
-          title: 'Auto-generated pull request'
-          body: 'This pull request was automatically generated.'
+          git push origin deployment-branch
+          hub pull-request -m "Auto-generated pull request" -b main -h deployment-branch || true
 
       - name: Telegram Notifications on Success
         if: ${{ success() }}
