@@ -1,7 +1,7 @@
 name: Deployment workflow
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "dev" ]
 
 jobs:
   deployment:
@@ -28,8 +28,9 @@ jobs:
           git config user.email "${{ github.actor }}@users.noreply.github.com"
           git checkout -b deployment-branch
           git commit -am "Auto-commit on successful build"
-          git push origin deployment-branch
-          hub pull-request -m "Auto-generated pull request" -b main -h deployment-branch || true
+          
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
 
       - name: Telegram Notifications on Success
         if: ${{ success() }}
