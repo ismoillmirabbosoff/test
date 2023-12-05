@@ -27,6 +27,7 @@ jobs:
         run: |
           git config user.name "ismoillmirabbosoff"
           git config user.email "ismoillmirabbosoff@users.noreply.github.com"
+          git checkout main  # Switch to another branch (assuming 'main' exists)
           git branch -D dev  # Delete the existing 'dev' branch
           git checkout -b dev  # Create a new 'dev' branch
           git commit -am "Auto-commit on successful build"
