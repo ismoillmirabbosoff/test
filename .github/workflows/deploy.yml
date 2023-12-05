@@ -27,6 +27,7 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
+          format: markdown
           message: |
             ${{ github.actor }} created commit:
              Commit message: ${{ github.event.commits[0].message }}
@@ -34,3 +35,8 @@ jobs:
              Repository: ${{ github.repository }}
 
              See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+
+             🎉 **`${{ github.actor }}`** aka ${{ steps.tagged.outputs.reviewer }} send message from 🍻  
+              Repository: https://github.com/${{ github.repository }}
+
+
