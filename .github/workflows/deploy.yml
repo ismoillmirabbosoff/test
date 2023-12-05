@@ -23,15 +23,20 @@ jobs:
           arguments: build
 
       - name: Create Pull Request on Success
-        if: ${{ success() }}
+        if: success()
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
-          git checkout -b main
+          git checkout -b dev
           git commit -am "Auto-commit on successful build"
-          
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
+        with:
+          base: 'main'
+          head: 'dev'
+          title: 'Auto-generated pull request'
+          body: 'This pull request was automatically generated.'
 
       - name: Telegram Notifications on Success
         if: ${{ success() }}
