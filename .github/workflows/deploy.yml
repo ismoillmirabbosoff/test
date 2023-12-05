@@ -24,7 +24,7 @@ jobs:
 
       - name: Telegram Notifications
         if: ${{ success() }}
-        uses: appleboy/telegram-action@mast er
+        uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
