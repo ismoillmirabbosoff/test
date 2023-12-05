@@ -22,9 +22,8 @@ jobs:
         with:
           arguments: build
 
-
-
       - name: Create Pull Request
+        if: ${{ success() }}
         uses: peter-evans/create-pull-request@v5
         with:
           base: 'main'
@@ -40,7 +39,7 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: markdown
           message: |
-            ${{ github.actor }} successfully created commit ❌❌❌:
+            ${{ github.actor }} successfully created commit ✅✅✅:
              Commit message: ${{ github.event.commits[0].message }}
              Repository: ${{ github.repository }}
              See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
@@ -54,7 +53,7 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: markdown
           message: |
-            ${{ github.actor }} successfully created commit ❌❌❌:
+            ${{ github.actor }} failed created commit ❌❌❌:
              Commit message: ${{ github.event.commits[0].message }}
              Repository: ${{ github.repository }}
              See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
