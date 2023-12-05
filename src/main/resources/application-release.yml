@@ -1,0 +1,35 @@
+server:
+  port: ${SERVER_PORT}
+debug: true
+sp:
+  media:
+    allowed:
+      max-size: ${SP_MEDIA_MAX_SIZE}
+  aws:
+    accessKey: ${SP_ACCESS_KEY}
+    secretKey: ${SP_SECRET_KEY}
+    public-bucket: ${SP_PUBLIC_PUCKET}
+    private-bucket: ${SP_PRIVATE_BUCKET}
+    region: ${SP_REGION}
+    pre-sign-expire: ${SP_PRE_SIGN_EXPIRE} # seconds
+spring:
+
+  data:
+    mongodb:
+      host: ${MONGODB_HOST}
+      port: ${MONGODB_PORT}
+      authentication-database: ${MONGODB_AUTHENTICATION_DATABASE}
+      username: ${MONGODB_USERNAME}
+      password: ${MONGODB_PASSWORD}
+      database: ${MONGODB_DATABASE}
+
+  application:
+    name: ${SERVER_NAME}
+
+
+#  Eureka configuration
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER_URL}
+

@@ -1,0 +1,35 @@
+server:
+  port: 8005
+
+sp:
+  media:
+    allowed:
+      max-size: 10485760
+  aws:
+    accessKey: AKIAZDWV7ZLI5RTSIPPS
+    secretKey: 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
+    public-bucket: sp-media-dev-public-bucket
+    private-bucket: sp-media-dev-private-bucket
+    region: us-east-1
+    pre-sign-expire: 1800 # seconds
+spring:
+#  rabbitmq:
+#    username: user
+#    password: password
+#    host: localhost
+#    port: 5672
+  data:
+    mongodb:
+      host: localhost
+      username: user
+      password: password
+      authentication-database: admin
+      database: media
+      port: 27017
+  application:
+    name: media
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8888/eureka

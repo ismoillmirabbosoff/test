@@ -1,0 +1,19 @@
+server:
+  error:
+    include-message: always
+    debug: true
+
+sp:
+  media:
+    allowed:
+      types: jpg,jpeg,png,docx,pdf,csv,xlsx
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+eureka:
+  instance:
+    registry-fetch-interval-seconds: 10
+    prefer-ip-address: true
