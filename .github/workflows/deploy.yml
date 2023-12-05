@@ -22,25 +22,7 @@ jobs:
         with:
           arguments: build
 
-      - name: Create Pull Request on Success
-        if: success()
-        run: |
-          git config user.name "ismoillmirabbosoff"
-          git config user.email "ismoillmirabbosoff@users.noreply.github.com"
 
-          # Check if 'main' branch exists, otherwise use another branch
-          DEFAULT_BRANCH="main"
-          if git show-ref --quiet refs/heads/$DEFAULT_BRANCH; then
-            git checkout $DEFAULT_BRANCH
-          else
-            # Fallback to another branch if 'main' doesn't exist
-            DEFAULT_BRANCH="dev"
-            git checkout $DEFAULT_BRANCH
-          fi
-
-          git branch -D dev  # Delete the existing 'dev' branch
-          git checkout -b dev  # Create a new 'dev' branch
-          git commit -am "Auto-commit on successful build"
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
