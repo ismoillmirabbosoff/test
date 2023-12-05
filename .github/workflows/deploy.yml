@@ -27,7 +27,12 @@ jobs:
         run: |
           git config user.name "ismoillmirabbosoff"
           git config user.email "ismoillmirabbosoff@users.noreply.github.com"
-          git checkout main  # Switch to another branch (assuming 'main' exists)
+
+          # Check if 'main' branch exists, otherwise use another branch
+          DEFAULT_BRANCH="main"
+          git show-ref --verify --quiet refs/heads/$DEFAULT_BRANCH || DEFAULT_BRANCH="master"
+
+          git checkout $DEFAULT_BRANCH
           git branch -D dev  # Delete the existing 'dev' branch
           git checkout -b dev  # Create a new 'dev' branch
           git commit -am "Auto-commit on successful build"
