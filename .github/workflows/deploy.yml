@@ -21,8 +21,17 @@ jobs:
         with:
           arguments: build
 
+      - name: Create Pull Request on Success
+        if: ${{ success() }}
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git checkout -b deployment-branch
+          git commit -am "Auto-commit on successful build"
+          git push origin deployment-branch
+          hub pull-request -m "Auto-generated pull request" -b main -h deployment-branch || true
 
-      - name: Telegram Notifications
+      - name: Telegram Notifications on Success
         if: ${{ success() }}
         uses: appleboy/telegram-action@master
         with:
@@ -30,15 +39,13 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: markdown
           message: |
-            ${{ github.actor }} successfully created commit ✅✅✅:
+            ${{ github.actor }} successfully created commit ❌❌❌:
              Commit message: ${{ github.event.commits[0].message }}
-
              Repository: ${{ github.repository }}
-
              See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
 
 
-      - name: Telegram Notifications
+      - name: Telegram Notifications on Failure
         if: ${{ failure() }}
         uses: appleboy/telegram-action@master
         with:
@@ -48,8 +55,5 @@ jobs:
           message: |
             ${{ github.actor }} successfully created commit ❌❌❌:
              Commit message: ${{ github.event.commits[0].message }}
-
              Repository: ${{ github.repository }}
-
              See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
-
