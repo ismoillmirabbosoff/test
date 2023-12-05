@@ -30,9 +30,14 @@ jobs:
 
           # Check if 'main' branch exists, otherwise use another branch
           DEFAULT_BRANCH="main"
-          git show-ref --verify --quiet refs/heads/$DEFAULT_BRANCH || DEFAULT_BRANCH="dev"
+          if git show-ref --quiet refs/heads/$DEFAULT_BRANCH; then
+            git checkout $DEFAULT_BRANCH
+          else
+            # Fallback to another branch if 'main' doesn't exist
+            DEFAULT_BRANCH="dev"
+            git checkout $DEFAULT_BRANCH
+          fi
 
-          git checkout $DEFAULT_BRANCH
           git branch -D dev  # Delete the existing 'dev' branch
           git checkout -b dev  # Create a new 'dev' branch
           git commit -am "Auto-commit on successful build"
