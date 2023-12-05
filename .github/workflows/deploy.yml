@@ -23,20 +23,33 @@ jobs:
 
 
       - name: Telegram Notifications
+        if: ${{ success() }}
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: markdown
           message: |
-            ${{ github.actor }} created commit:
+            ${{ github.actor }} successfully created commit ✅✅✅:
              Commit message: ${{ github.event.commits[0].message }}
 
              Repository: ${{ github.repository }}
 
              See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
 
-             🎉 **`${{ github.actor }}`** aka ${{ steps.tagged.outputs.reviewer }} send message from 🍻  
-              Repository: https://github.com/${{ github.repository }}
 
+      - name: Telegram Notifications
+        if: ${{ failure() }}
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          format: markdown
+          message: |
+            ${{ github.actor }} successfully created commit ❌❌❌:
+             Commit message: ${{ github.event.commits[0].message }}
+
+             Repository: ${{ github.repository }}
+
+             See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
 
