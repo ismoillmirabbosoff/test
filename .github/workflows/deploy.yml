@@ -1,7 +1,8 @@
 name: Deployment workflow
 on:
-  push:
-    branches: [ "dev" ]
+  pull_request:
+    types:
+      - opened
 
 
 jobs:
